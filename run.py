@@ -3,7 +3,8 @@ import subprocess
 import inputs
 import random
 
-N = 10
+N = 1000
+M = 10
 COMP = "gcc -Wall -Wextra -Werror -g3 -fsanitize=address "
 
 tests = []
@@ -71,18 +72,26 @@ def launch_tests():
     result3 = subprocess.run("./tests_printf > printf_output", shell=True)
 
 def diff():
+    ok = True
     print("Comparing outputs:")
     print()
     ftprintf_output = open("ftprintf_output", "r").readlines()
     printf_output = open("printf_output", "r").readlines()
     for i in range(len(tests)):
         if (ftprintf_output[i] != printf_output[i]):
+            ok = False
             print("Diff for printf({});".format(tests[i]))
             print("  printf: |{}|".format(printf_output[i][:-1]))
             print("ftprintf: |{}|".format(ftprintf_output[i][:-1]))
             print()
+    if (ok):
+        print("No differences, well done !")
 
 compile_lib()
-generate_mains()
-launch_tests()
-diff()
+
+for i in range(M):
+    print("Generating mains of {} tests ({}/{})".format(N, i + 1, M))
+    tests = []
+    generate_mains()
+    launch_tests()
+    diff()
