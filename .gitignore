@@ -1,0 +1,10 @@
+ftprintf_output
+printf_output
+tests_printf
+tests_ftprintf
+main_printf.c
+main_ftprintf.c
+__PYCACHE__
+*.pyc
+*.pyd
+*.dSYM
