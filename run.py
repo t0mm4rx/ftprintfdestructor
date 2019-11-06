@@ -1,5 +1,7 @@
 import sys
 import subprocess
+import inputs
+import random
 
 N = 100
 COMP = "gcc -Wall -Wextra -Werror -g3 -fsanitize=address "
@@ -15,9 +17,27 @@ if (PATH[-1] != "/"):
 def compile_lib():
     result = subprocess.run("make -C {}".format(PATH), shell=True)
 
+def function_content():
+    format = ""
+    args = []
+    for _ in range(random.randint(0, 10)):
+        if (random.random() < .6):
+            format += inputs.random_string(random.randint(1, 20))
+        else:
+            temp = inputs.random_arg()
+            format += temp[0]
+            args.append(temp[1])
+    format += "\\n"
+    res = "\"{}\"".format(format)
+    for arg in args:
+        if (arg != ""):
+            res += ", " + arg
+    return res
+
 def generate_test():
-    res1 = "\tft_printf(\"\");\n"
-    res2 = "\tprintf(\"\");\n"
+    content = function_content()
+    res1 = "\tft_printf({});\n".format(content)
+    res2 = "\tprintf({});\n".format(content)
     return (res1, res2)
 
 def generate_tests():
@@ -47,6 +67,11 @@ def launch_tests():
     result3 = subprocess.run("./tests_ftprintf > ftprintf_output", shell=True)
     result3 = subprocess.run("./tests_printf > printf_output", shell=True)
 
+def diff():
+    print("Comparing outputs:")
+    subprocess.run("diff ftprintf_output printf_output", shell=True)
+
 compile_lib()
 generate_mains()
 launch_tests()
+diff()
