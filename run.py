@@ -3,8 +3,10 @@ import subprocess
 import inputs
 import random
 
-N = 100
+N = 10
 COMP = "gcc -Wall -Wextra -Werror -g3 -fsanitize=address "
+
+tests = []
 
 if (len(sys.argv) != 2):
     print("Wrong usage: sh run.sh <path-of-ftprintf>")
@@ -22,7 +24,7 @@ def function_content():
     args = []
     for _ in range(random.randint(0, 10)):
         if (random.random() < .6):
-            format += inputs.random_string(random.randint(1, 20))
+            format += inputs.random_string(random.randint(1, 5))
         else:
             temp = inputs.random_arg()
             format += temp[0]
@@ -38,6 +40,7 @@ def generate_test():
     content = function_content()
     res1 = "\tft_printf({});\n".format(content)
     res2 = "\tprintf({});\n".format(content)
+    tests.append(content)
     return (res1, res2)
 
 def generate_tests():
@@ -69,7 +72,15 @@ def launch_tests():
 
 def diff():
     print("Comparing outputs:")
-    subprocess.run("diff ftprintf_output printf_output", shell=True)
+    print()
+    ftprintf_output = open("ftprintf_output", "r").readlines()
+    printf_output = open("printf_output", "r").readlines()
+    for i in range(len(tests)):
+        if (ftprintf_output[i] != printf_output[i]):
+            print("Diff for printf({});".format(tests[i]))
+            print("  printf: |{}|".format(printf_output[i][:-1]))
+            print("ftprintf: |{}|".format(ftprintf_output[i][:-1]))
+            print()
 
 compile_lib()
 generate_mains()
