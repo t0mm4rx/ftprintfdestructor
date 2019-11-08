@@ -90,6 +90,7 @@ def diff():
 compile_lib()
 
 for i in range(M):
+    print()
     print("Generating mains of {} tests ({}/{})".format(N, i + 1, M))
     tests = []
     generate_mains()
