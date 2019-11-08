@@ -86,9 +86,6 @@ def random_arg():
 		format += size
 		data = input_int()
 	if (type == "%"):
-		format += flags
-		format += width
-		format += size
 		data = ""
 	if (type == "u"):
 		format += flags
