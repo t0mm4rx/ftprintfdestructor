@@ -11,3 +11,8 @@ git clone https://github.com/t0mm4rx/ftprintfdestructor
 cd ftprintfdestructor
 sh run.sh <path-of-ftprintf>
 ```
+
+## How it works
+This script generate hundreds of random test, then create two mains. One calling these tests with printf and the other with ft_printf. Then, it compares line by line and print the tests that failed.
+
+The value between -- X -- is the return value of the function.
