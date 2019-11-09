@@ -2,7 +2,7 @@
 
 This project is a script that generate thousands of tests for the school 42 project ft_printf.
 
-It doesn't test %p flag nor return value, test them yourself.
+It doesn't test %p flag, test them yourself.
 
 By **tmarx**
 ## Usage

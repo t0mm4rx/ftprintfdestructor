@@ -30,7 +30,6 @@ def function_content():
             temp = inputs.random_arg()
             format += temp[0]
             args.append(temp[1])
-    format += "\\n"
     res = "\"{}\"".format(format)
     for arg in args:
         if (arg != ""):
@@ -39,8 +38,8 @@ def function_content():
 
 def generate_test():
     content = function_content()
-    res1 = "\tft_printf({});\n".format(content)
-    res2 = "\tprintf({});\n".format(content)
+    res1 = "\tft_printf(\"-- %d --\\n\", ft_printf({}));\n".format(content)
+    res2 = "\tprintf(\"-- %d --\\n\", printf({}));\n".format(content)
     tests.append(content)
     return (res1, res2)
 
