@@ -29,7 +29,8 @@ def function_content():
         else:
             temp = inputs.random_arg()
             format += temp[0]
-            args.append(temp[1])
+            for arg in temp[1]:
+                args.append(arg)
     res = "\"{}\"".format(format)
     for arg in args:
         if (arg != ""):

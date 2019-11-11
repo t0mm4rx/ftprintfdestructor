@@ -40,17 +40,27 @@ def input_char():
 
 def random_arg():
 	format = "%"
-	data = ""
+	data = []
 	choices = ["s", "c", "i", "d", "x", "X", "%", "u"]
 
 	width = ""
 	size = ""
 	flags = ""
 
+	type = random.choice(choices)
 	if (random.random() > .5):
-		width = str(random.randint(1, 20))
+		if (random.random() > .8):
+			width = "*"
+			data.append(str(random.randint(-10, 10)))
+		else:
+			width = str(random.randint(1, 20))
 	if (random.random() > .5):
-		size = "." + str(random.randint(0, 5))
+		if (random.random() > .8):
+			size = ".*"
+			if (type != "%" and type != "c"):
+				data.append(str(random.randint(-10, 10)))
+		else:
+			size = "." + str(random.randint(0, 5))
 	choice = random.choice([0, 1, 2])
 	if (choice == 0):
 		flags = ""
@@ -58,39 +68,37 @@ def random_arg():
 		flags = "-"
 	else:
 		flags = "0"
-
-
-	type = random.choice(choices)
 	if (type == "s"):
 		format += flags.replace("0", "")
 		format += width
 		format += size
-		data = input_string()
+		data.append(input_string())
 	if (type == "c"):
 		format += flags.replace("0", "")
 		format += width
-		data = input_char()
+		data.append(input_char())
 	if (type == "i" or type == "d"):
 		format += flags
 		format += width
 		format += size
-		data = input_int()
+		data.append(input_int())
 	if (type == "x"):
 		format += flags
 		format += width
 		format += size
-		data = input_int()
+		data.append(input_int())
 	if (type == "X"):
 		format += flags
 		format += width
 		format += size
-		data = input_int()
+		data.append(input_int())
 	if (type == "%"):
-		data = ""
+		data = []
+		data.append("")
 	if (type == "u"):
 		format += flags
 		format += width
 		format += size
-		data = input_uint()
+		data.append(input_uint())
 	format += type
 	return (format, data)
