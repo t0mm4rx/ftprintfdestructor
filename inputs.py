@@ -99,6 +99,6 @@ def random_arg():
 		format += flags
 		format += width
 		format += size
-		data.append(input_uint())
+		data.append(input_int())
 	format += type
 	return (format, data)
